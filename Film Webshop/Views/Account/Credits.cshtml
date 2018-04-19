@@ -1,0 +1,22 @@
+﻿@using Film_Webshop.Models
+@model Account
+@{
+    ViewBag.Title = "Credits";
+}
+
+<h2>Uw Credits</h2>
+
+@using (Html.BeginForm("Credits", "Account", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Credits , new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Credits)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Krijg 10 Credits" />
+        </div>
+    </div>
+}
