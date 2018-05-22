@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Film_Webshop.Context.MSSQL;
@@ -10,7 +9,6 @@ using Film_Webshop.Viewmodels;
 
 namespace Film_Webshop.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly AccountRepository _accountRepository = new AccountRepository(new MssqlAccountContext());
@@ -91,6 +89,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Credits()
         {
             TicketAuthenticator auth = new TicketAuthenticator();
@@ -99,6 +98,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Credits(Account acc)
         {
             TicketAuthenticator auth = new TicketAuthenticator();
