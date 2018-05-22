@@ -9,111 +9,159 @@ namespace Film_Webshop.Context.MSSQL
     {
         public int GetGenreId(string genre)
         {
-            int genreId = 0;
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM dbo.Genre WHERE Naam = @genre";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@genre", genre);
-                cmd.ExecuteNonQuery();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                int genreId = 0;
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    string query = "SELECT * FROM dbo.Genre WHERE Naam = @genre";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@genre", genre);
+                    cmd.ExecuteNonQuery();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        genreId = reader.GetInt32(reader.GetOrdinal("ID"));
+                        while (reader.Read())
+                        {
+                            genreId = reader.GetInt32(reader.GetOrdinal("ID"));
+                        }
                     }
                 }
+
+                return genreId;
             }
-            return genreId;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
         }
 
         public List<int> SelectByGenreId(int id)
         {
-            List<int> idList = new List<int>();
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM dbo.FilmGenre WHERE Genre_ID = @genreID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@genreID", id);
-                cmd.ExecuteNonQuery();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                List<int> idList = new List<int>();
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    string query = "SELECT * FROM dbo.FilmGenre WHERE Genre_ID = @genreID";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@genreID", id);
+                    cmd.ExecuteNonQuery();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        idList.Add(reader.GetInt32(reader.GetOrdinal("Film_ID")));
+                        while (reader.Read())
+                        {
+                            idList.Add(reader.GetInt32(reader.GetOrdinal("Film_ID")));
+                        }
                     }
                 }
+                return idList;
             }
-            return idList;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<int>();
+            }
         }
 
         public List<Genre> SelectByFilmId(int id)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query =
-                    "SELECT * FROM dbo.FilmGenre INNER JOIN dbo.Genre ON dbo.FilmGenre.Genre_ID = dbo.Genre.ID WHERE Film_ID = @ID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("ID", id);
-                SqlDataReader reader = cmd.ExecuteReader();
-                List<Genre> genres = new List<Genre>();
-
-                while (reader.Read())
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    Genre fg = new Genre(reader.GetString(reader.GetOrdinal("Naam")));
-                    genres.Add(fg);
+                    conn.Open();
+                    string query = "SELECT * FROM dbo.FilmGenre INNER JOIN dbo.Genre ON dbo.FilmGenre.Genre_ID = dbo.Genre.ID WHERE Film_ID = @ID";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("ID", id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<Genre> genres = new List<Genre>();
+                    while (reader.Read())
+                    {
+                        Genre fg = new Genre(reader.GetString(reader.GetOrdinal("Naam")));
+                        genres.Add(fg);
+                    }
+                    conn.Close();
+                    return genres;
                 }
-                conn.Close();
-                return genres;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<Genre>();
             }
         }
 
         public List<Genre> SelectAll()
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM dbo.Genre";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                List<Genre> genres = new List<Genre>();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    Genre fg = new Genre(reader.GetString(reader.GetOrdinal("Naam")));
-                    genres.Add(fg);
+                    conn.Open();
+                    string query = "SELECT Genre.Naam, COUNT(Film_ID) AS Aantal FROM FilmGenre RIGHT JOIN Genre ON FilmGenre.Genre_ID = Genre.ID GROUP BY Genre.Naam ORDER BY Genre.Naam ASC";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    List<Genre> genres = new List<Genre>();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string naam = reader.GetString(reader.GetOrdinal("Naam"));
+                        int aantal = reader.GetInt32(reader.GetOrdinal("Aantal"));
+                        Genre fg = new Genre(naam, aantal);
+                        genres.Add(fg);
+                    }
+
+                    conn.Close();
+                    return genres;
                 }
-                conn.Close();
-                return genres;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<Genre>();
             }
         }
 
         public void Insert(int filmId, int genreId)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "INSERT INTO dbo.FilmGenre (Film_ID, Genre_ID) VALUES (@Film_ID, @Genre_ID)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Genre_ID", genreId);
-                cmd.Parameters.AddWithValue("@Film_ID", filmId);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string query = "INSERT INTO dbo.FilmGenre (Film_ID, Genre_ID) VALUES (@Film_ID, @Genre_ID)";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Genre_ID", genreId);
+                    cmd.Parameters.AddWithValue("@Film_ID", filmId);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
         public void Delete(Film film)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "DELETE * FROM dbo.FilmGenre WHERE ID = @ID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@ID", film.Id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM dbo.FilmGenre WHERE Film_ID = @filmID";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@filmID", film.Id);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

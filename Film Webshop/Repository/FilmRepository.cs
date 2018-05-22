@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Film_Webshop.Context.MSSQL;
 using Film_Webshop.Models;
@@ -12,16 +13,6 @@ namespace Film_Webshop.Repository
         public FilmRepository(MssqlFilmContext filmContext)
         {
             _filmContext = filmContext;
-        }
-
-        public int GetPrijs(List<Film> filmList)
-        {
-            int totaalPrijs = 0;
-            foreach (Film f in filmList)
-            {
-                totaalPrijs += f.Prijs;
-            }
-            return totaalPrijs;
         }
 
         public List<Film> GetAllFilms()
@@ -109,6 +100,16 @@ namespace Film_Webshop.Repository
         public void EditFilm(Film film)
         {
             _filmContext.Update(film);
+        }
+
+        public void BuyFilm(Account acc, Film f)
+        {
+            _filmContext.BuyFilm(f.Id, acc.Id, f.Prijs, DateTime.Now);
+        }
+
+        public List<Film> GetBoughtFilms(int accId)
+        {
+            return _filmContext.GetBoughtFilms(accId);
         }
     }
 }

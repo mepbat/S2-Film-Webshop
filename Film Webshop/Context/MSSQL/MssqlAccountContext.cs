@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Film_Webshop.Models;
 
@@ -8,89 +9,79 @@ namespace Film_Webshop.Context.MSSQL
     {
         public void Insert(Account account)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "INSERT INTO dbo.Account (Email, Wachtwoord, Admin, Credits) VALUES (@Email, @Wachtwoord, @Admin, @Credits)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Email", account.Email);
-                cmd.Parameters.AddWithValue("@Wachtwoord", account.Wachtwoord);
-                cmd.Parameters.AddWithValue("@Admin", account.Admin);
-                cmd.Parameters.AddWithValue("@Credits", account.Credits);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string query = "INSERT INTO dbo.Account (Email, Wachtwoord, Admin, Credits) VALUES (@Email, @Wachtwoord, @Admin, @Credits)";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Email", account.Email);
+                    cmd.Parameters.AddWithValue("@Wachtwoord", account.Wachtwoord);
+                    cmd.Parameters.AddWithValue("@Admin", account.Admin);
+                    cmd.Parameters.AddWithValue("@Credits", account.Credits);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
         public List<Account> SelectAll()
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                List<Account> accounts = new List<Account>();
-                string query = "SELECT * FROM dbo.account";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    int id = reader.GetInt32(reader.GetOrdinal("ID"));
-                    string email = reader.GetString(reader.GetOrdinal("Email"));
-                    string wachtwoord = reader.GetString(reader.GetOrdinal("Wachtwoord"));
-                    bool admin = reader.GetBoolean(reader.GetOrdinal("Admin"));
-                    int credits = reader.GetInt32(reader.GetOrdinal("Credits"));
-                    Account acc = new Account(id, credits, email, wachtwoord, admin);
-                    accounts.Add(acc);
+                    conn.Open();
+                    List<Account> accounts = new List<Account>();
+                    string query = "SELECT * FROM dbo.account";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(reader.GetOrdinal("ID"));
+                        string email = reader.GetString(reader.GetOrdinal("Email"));
+                        string wachtwoord = reader.GetString(reader.GetOrdinal("Wachtwoord"));
+                        bool admin = reader.GetBoolean(reader.GetOrdinal("Admin"));
+                        int credits = reader.GetInt32(reader.GetOrdinal("Credits"));
+                        Account acc = new Account(id, credits, email, wachtwoord, admin);
+                        accounts.Add(acc);
+                    }
+
+                    conn.Close();
+                    return accounts;
                 }
-                conn.Close();
-                return accounts;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<Account>();
             }
         }
 
         public void Update(Account account, int credits)
         {
-            int newcredits = account.Credits + credits;
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                string query = "UPDATE dbo.Account SET Credits = @newcredits WHERE ID = @id";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@newcredits", newcredits);
-                cmd.Parameters.AddWithValue("@id", account.Id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-        public void BuyFilm(Film f, int accId)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                string query = "INSERT INTO dbo.AccountFilm (Account_ID, Film_ID) VALUES (@Account_ID, @Film_ID)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Account_ID", accId);
-                cmd.Parameters.AddWithValue("@Film_ID", f.Id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-        public List<int> GetBoughtFilmIds(int accId)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                string query = "SELECT * FROM dbo.AccountFilm WHERE Account_ID = @Account_ID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Account_ID", accId);
-                SqlDataReader reader = cmd.ExecuteReader();
-                List<int> filmIdList = new List<int>();
-                while (reader.Read())
+                int newcredits = account.Credits + credits;
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
-                    filmIdList.Add(reader.GetInt32(reader.GetOrdinal("Film_ID")));
+                    conn.Open();
+                    string query = "UPDATE dbo.Account SET Credits = @newcredits WHERE ID = @id";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@newcredits", newcredits);
+                    cmd.Parameters.AddWithValue("@id", account.Id);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
                 }
-                conn.Close();
-                return filmIdList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

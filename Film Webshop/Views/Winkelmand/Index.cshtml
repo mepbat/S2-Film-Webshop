@@ -8,15 +8,20 @@
 
 @{
     List<SelectListItem> filmList = new List<SelectListItem>();
+    filmList.Add(new SelectListItem
+    {
+        Text = "Alles (" + Model.Winkelmand.Films.Count + ")",
+        Value = "Alles"
+    });
     foreach (var item in Model.Genres)
     {
         filmList.Add(new SelectListItem
         {
-            Text = item.Naam.ToString(),
-            Value = item.Naam.ToString()
+            Text = item.Naam + " (" + Model.Winkelmand.Films.Count(x => x.ListGenres.Exists(y => y.Naam == item.Naam)) + ")",
+            Value = item.Naam
         });
     }
-    filmList = filmList.DistinctBy(x => x.Text).ToList();
+    filmList = filmList.DistinctBy(x => x.Value).ToList();
 }
 <!DOCTYPE html>
 
@@ -24,7 +29,7 @@
 <br />
 <input class="form-control" id="myInput" type="text" placeholder="Search here" />
 <br />
-@using (Html.BeginForm("Kopen","Winkelmand",FormMethod.Post))
+@using (Html.BeginForm())
 {
     @ViewBag.Message
     @Html.AntiForgeryToken()

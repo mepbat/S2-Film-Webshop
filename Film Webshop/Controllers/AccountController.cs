@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Film_Webshop.Context.MSSQL;
@@ -112,16 +113,31 @@ namespace Film_Webshop.Controllers
         {
             TicketAuthenticator auth = new TicketAuthenticator();
             int accId = auth.Decrypt();
-            List<Film> listFilms = new List<Film>();
-            foreach (int filmId in _accountRepository.GetBoughtFilmIds(accId))
+            Account acc = _accountRepository.GetAccountById(accId);
+            acc.Films = _filmRepository.GetBoughtFilms(accId);
+            AccountFilmsViewmodel viewmodel = new AccountFilmsViewmodel
             {
-                listFilms.Add(_filmRepository.GetById(filmId));
-            }
-            AccountWinkelmandGenreViewmodel viewmodel = new AccountWinkelmandGenreViewmodel
-            {
-                Winkelmand = new Winkelmand(listFilms, _filmRepository.GetPrijs(listFilms)),
                 Genres = _genreRepository.GetAllGenres(),
-                Account = _accountRepository.GetAccountById(accId)
+                Account = acc
+            };
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult Films(string gekozenGenre)
+        {
+            if (gekozenGenre == "Alles")
+            {
+                return RedirectToAction("Films");
+            }
+            TicketAuthenticator auth = new TicketAuthenticator();
+            int accId = auth.Decrypt();
+            Account acc = _accountRepository.GetAccountById(accId);
+            acc.Films = _filmRepository.GetBoughtFilms(accId).Where(x => x.ListGenres.Exists(y => y.Naam == gekozenGenre)).ToList();
+            AccountFilmsViewmodel viewmodel = new AccountFilmsViewmodel
+            {
+                Genres = _genreRepository.GetAllGenres(),
+                Account = acc
             };
             return View(viewmodel);
         }

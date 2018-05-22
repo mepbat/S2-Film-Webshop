@@ -7,16 +7,20 @@
 
 @{
     List<SelectListItem> filmList = new List<SelectListItem>();
+    filmList.Add(new SelectListItem
+    {
+        Text = "Alles (" + Model.ListFilm.Count + ")",
+        Value = "Alles"
+    });
     foreach (var item in Model.ListGenres)
     {
         filmList.Add(new SelectListItem
         {
-            Text = item.Naam,
+            Text = item.Naam + " (" + item.Aantal + ")",
             Value = item.Naam
-
         });
     }
-    filmList = filmList.DistinctBy(x => x.Text).ToList();
+    filmList = filmList.DistinctBy(x => x.Value).ToList();
 }
 <!DOCTYPE html>
 
@@ -24,17 +28,25 @@
 <br />
 <input class="form-control" id="myInput" type="text" placeholder="Search here" />
 <br />
+@using (Html.BeginForm("Toevoegen", "Film", FormMethod.Get))
+{
+    if (Model.Account.Admin)
+    {
+        <button type="submit">Film Toevoegen</button>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="form-group dropdown">
+        <br />
         @Html.DropDownList("gekozenGenre", filmList)
         <input type="submit" value="Filter" />
     </div>
     <table class="table" style="width: 33%; float:left">
         <tbody id="myTable">
             @for (int i = 0; i < Model.ListFilm.Count; i += 3)
-                {
+            {
                 <tr>
                     <td style="width: 1%">
                         <a href="@Url.Action("Details", new { id = Model.ListFilm[i].Id })">
@@ -75,7 +87,7 @@
     <table class="table" style="width: 33%; float:left">
         <tbody id="myTable">
             @for (int i = 1; i < Model.ListFilm.Count; i += 3)
-                {
+            {
                 <tr>
                     <td style="width: 1%">
                         <a href="@Url.Action("Details", new { id = Model.ListFilm[i].Id })">
