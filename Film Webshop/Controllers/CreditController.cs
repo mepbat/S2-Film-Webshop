@@ -1,8 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Film_Webshop.Context.MSSQL;
 using Film_Webshop.Helpers;
 using Film_Webshop.Models;
 using Film_Webshop.Repository;
+using Film_Webshop.Viewmodels;
 
 namespace Film_Webshop.Controllers
 {
@@ -17,17 +19,25 @@ namespace Film_Webshop.Controllers
         public ActionResult Credits()
         {
             Account acc = _accountRepository.GetAccountById(_auth.Decrypt());
-            return View(acc);
+            CreditsViewmodel vm = new CreditsViewmodel();
+            vm.Account = acc;
+            return View(vm);
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult Credits(Account acc)
+        public ActionResult Credits(CreditsViewmodel vm)
         {
-            Account a = _accountRepository.GetAccountById(_auth.Decrypt());
-            _creditContext.AddCredits(a, 10);
-            a = _accountRepository.GetAccountById(_auth.Decrypt());
-            return View(a);
+            if (_creditContext.CheckInt(vm.Credits))
+            {
+                vm.Account = _accountRepository.GetAccountById(_auth.Decrypt());
+                _creditContext.AddCredits(vm.Account, Convert.ToInt32(vm.Credits));
+                vm.Account = _accountRepository.GetAccountById(_auth.Decrypt());
+                return View(vm);
+            }
+            vm.Account = _accountRepository.GetAccountById(_auth.Decrypt());
+            ViewBag.GeenInt = "Vul een geheel getal in boven de 0.";
+            return View(vm);
         }
     }
 }

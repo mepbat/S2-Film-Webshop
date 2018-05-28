@@ -6,7 +6,7 @@ using Film_Webshop.Models;
 
 namespace Film_Webshop.Context
 {
-    public class ICreditContext
+    public interface ICreditContext
     {
         void Update(Account acc, int credits);
     }

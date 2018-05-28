@@ -166,8 +166,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Context\ICreditContext.cs" />
+    <Compile Include="Context\MSSQL\MssqlCreditContext.cs" />
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Repository\AccountRepository.cs" />
+    <Compile Include="Repository\CreditRepository.cs" />
     <Compile Include="Repository\FilmRepository.cs" />
     <Compile Include="Repository\GenreRepository.cs" />
     <Compile Include="Repository\WinkelmandRepository.cs" />
@@ -195,6 +198,7 @@
     <Compile Include="Context\MSSQL\MssqlWinkelmandContext.cs" />
     <Compile Include="Viewmodels\AccountFilmsViewmodel.cs" />
     <Compile Include="Viewmodels\AccountWinkelmandGenreViewmodel.cs" />
+    <Compile Include="Viewmodels\CreditsViewmodel.cs" />
     <Compile Include="Viewmodels\FilmIndexViewmodel.cs" />
     <Compile Include="Viewmodels\ToevoegenViewmodel.cs" />
   </ItemGroup>
@@ -239,14 +243,13 @@
     <Content Include="Views\Film\Toevoegen.cshtml" />
     <Content Include="Views\Film\Details.cshtml" />
     <Content Include="Views\Winkelmand\Index.cshtml" />
-    <Content Include="Views\Account\Credits.cshtml" />
+    <Content Include="Views\Credit\Credits.cshtml" />
     <Content Include="Views\Film\Toegevoegd.cshtml" />
     <Content Include="Views\Account\Films.cshtml" />
     <Content Include="Views\Film\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Credit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

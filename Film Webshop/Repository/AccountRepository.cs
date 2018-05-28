@@ -107,10 +107,5 @@ namespace Film_Webshop.Repository
                 return false;
             }
         }
-
-        public void AddCredits(Account acc, int credits)
-        {
-            _accountContext.Update(acc, credits);
-        }
     }
 }

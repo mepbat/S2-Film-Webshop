@@ -90,26 +90,6 @@ namespace Film_Webshop.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Credits()
-        {
-            TicketAuthenticator auth = new TicketAuthenticator();
-            Account acc = _accountRepository.GetAccountById(auth.Decrypt());
-            return View(acc);
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult Credits(Account acc)
-        {
-            TicketAuthenticator auth = new TicketAuthenticator();
-            Account a = _accountRepository.GetAccountById(auth.Decrypt());
-            _accountRepository.AddCredits(a, 10);
-            a = _accountRepository.GetAccountById(auth.Decrypt());
-            return View(a);
-        }
-
-        [HttpGet]
-        [Authorize]
         public ActionResult Films()
         {
             TicketAuthenticator auth = new TicketAuthenticator();

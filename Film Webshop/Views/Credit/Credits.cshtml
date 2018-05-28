@@ -1,15 +1,17 @@
-﻿@using Film_Webshop.Models
-@model Account
+﻿@using Film_Webshop.Viewmodels
+@model CreditsViewmodel
 @{
     ViewBag.Title = "Credits";
 }
 
 <h2>Uw Credits</h2>
 
-@using (Html.BeginForm("Credits", "Account", FormMethod.Post))
+@using (Html.BeginForm("Credits", "Credit", FormMethod.Post))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Credits , new { @class = "col-md-2 control-label" })
+        <label>Vul aantal credits in die u wilt kopen.</label>
+        @ViewBag.geenInt
+        @Html.TextBoxFor(m => m.Credits)
         <div class="col-md-10">
             @Html.DisplayFor(m => m.Credits)
         </div>
