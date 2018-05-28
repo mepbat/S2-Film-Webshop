@@ -29,8 +29,12 @@ namespace Film_Webshop.Repository
             {
                 try
                 {
-                    Convert.ToInt32(credits);
-                    return true;
+                    int creditsInt = Convert.ToInt32(credits);
+                    if (creditsInt > 0)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
                 catch
                 {

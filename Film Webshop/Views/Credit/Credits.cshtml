@@ -10,15 +10,15 @@
 {
     <div class="form-group">
         <label>Vul aantal credits in die u wilt kopen.</label>
-        @ViewBag.geenInt
         @Html.TextBoxFor(m => m.Credits)
         <div class="col-md-10">
-            @Html.DisplayFor(m => m.Credits)
         </div>
     </div>
+    <p>U heeft @Model.Account.Credits Credits</p>
+    @ViewBag.geenInt
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Krijg 10 Credits" />
+            <input type="submit" class="btn btn-default" value="Koop" />
         </div>
     </div>
 }
