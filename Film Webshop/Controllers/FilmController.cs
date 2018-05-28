@@ -21,13 +21,16 @@ namespace Film_Webshop.Controllers
         private readonly WinkelmandRepository _winkelmandRepository = new WinkelmandRepository(new MssqlWinkelmandContext());
 
         [HttpGet]
+        [Authorize]
         public ActionResult Index()
         {
             TicketAuthenticator auth = new TicketAuthenticator();
-            List<Film> films = new List<Film>();
             Account acc = _accountRepository.GetAccountById(auth.Decrypt());
-            acc.Winkelmand = new Winkelmand();
-            acc.Winkelmand.Films = _winkelmandRepository.GetFilmsInWinkelmand(_winkelmandRepository.GetWinkelmandId(acc.Id)); ;
+            acc.Winkelmand = new Winkelmand
+            {
+                Films = _winkelmandRepository.GetFilmsInWinkelmand(_winkelmandRepository.GetWinkelmandId(acc.Id))
+            };
+            acc.Films = _filmRepository.GetBoughtFilms(acc.Id);
             FilmIndexViewmodel viewmodel = new FilmIndexViewmodel
             {
                 ListFilm = _filmRepository.GetAllFilms(),
@@ -38,6 +41,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Index(string gekozenGenre)
         {
             if (gekozenGenre == "Alles")
@@ -65,6 +69,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Details(int id = 0)
         {
             if (id == 0)
@@ -82,6 +87,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Toevoegen()
         {
             ToevoegenViewmodel viewmodel = new ToevoegenViewmodel
@@ -93,6 +99,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Toevoegen(ToevoegenViewmodel viewmodel, HttpPostedFileBase postedFile, bool Actie = false, bool Avontuur = false, bool Drama = false, bool Fantasie = false, bool Horror = false, bool Comedie = false, bool Misdaad = false, bool Oorlog = false, bool ScienceFiction = false, bool Sport = false, bool Thriller = false, bool Western = false, bool Romantiek = false)
         {
             viewmodel.Genres = _genreRepository.GetAllGenres();
@@ -126,12 +133,14 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Toegevoegd()
         {
             return View();
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Film film = _filmRepository.SelectFilm(id);
@@ -142,6 +151,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(ToevoegenViewmodel viewmodel, HttpPostedFileBase postedFile, bool Actie = false, bool Avontuur = false, bool Drama = false, bool Fantasie = false, bool Horror = false, bool Comedie = false, bool Misdaad = false, bool Oorlog = false, bool ScienceFiction = false, bool Sport = false, bool Thriller = false, bool Western = false, bool Romantiek = false)
         {
             viewmodel.Genres = _genreRepository.GetAllGenres();

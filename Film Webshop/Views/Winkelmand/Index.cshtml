@@ -35,23 +35,27 @@
     @Html.AntiForgeryToken()
     <div class="form-group dropdown">
         @Html.DropDownList("gekozenGenre", filmList)
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Filter"/>
     </div>
-    if (Model.Winkelmand.Films.Count != 0)
+}
+    @if (Model.Winkelmand.Films.Count != 0)
     {
-        <div style="position: relative">
-            <p><button type="submit">Koop</button> Voor @Model.Winkelmand.Totaalprijs Credits
-                @Html.HiddenFor(x => x.Account.Id)
-                @for (int i = 0; i < Model.Winkelmand.Films.Count; ++i)
-                {
-                    @Html.HiddenFor(x => x.Winkelmand.Films[i].Id)
-                }
-                @for (int i = 0; i < Model.Genres.Count; ++i)
-                {
-                    @Html.HiddenFor(x => x.Genres[i].Naam)
-                }
-            </p>
-        </div>
+        using (Html.BeginForm("Kopen", "Winkelmand", FormMethod.Post))
+         {
+             <div style="position: relative">
+                 <p><button type="submit">Koop</button> Voor @Model.Winkelmand.Totaalprijs Credits
+                     @Html.HiddenFor(x => x.Account.Id)
+                     @for (int i = 0; i < Model.Winkelmand.Films.Count; ++i)
+                     {
+                         @Html.HiddenFor(x => x.Winkelmand.Films[i].Id)
+                     }
+                     @for (int i = 0; i < Model.Genres.Count; ++i)
+                     {
+                         @Html.HiddenFor(x => x.Genres[i].Naam)
+                     }
+                 </p>
+             </div>
+         }
     }
     <table class="table" style="width: 33%; float:left">
         <tbody id="myTable">
@@ -123,4 +127,3 @@
         </tbody>
     </table>
     <br>
-}

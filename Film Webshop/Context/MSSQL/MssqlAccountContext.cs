@@ -62,27 +62,5 @@ namespace Film_Webshop.Context.MSSQL
                 return new List<Account>();
             }
         }
-
-        public void Update(Account account, int credits)
-        {
-            try
-            {
-                int newcredits = account.Credits + credits;
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    string query = "UPDATE dbo.Account SET Credits = @newcredits WHERE ID = @id";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@newcredits", newcredits);
-                    cmd.Parameters.AddWithValue("@id", account.Id);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
     }
 }

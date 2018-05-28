@@ -18,6 +18,7 @@ namespace Film_Webshop.Controllers
         readonly TicketAuthenticator _auth = new TicketAuthenticator();
 
         [HttpGet]
+        [Authorize]
         public ActionResult Index()
         {
             int accId = _auth.Decrypt();
@@ -32,6 +33,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Index(string gekozenGenre)
         {
             if (gekozenGenre == "Alles")
@@ -50,6 +52,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Toevoegen(int filmId)
         {
             int winkelmandId = _winkelmandRepository.GetWinkelmandId(_auth.Decrypt());
@@ -58,6 +61,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Verwijderen(int filmId)
         {
             int winkelmandId = _winkelmandRepository.GetWinkelmandId(_auth.Decrypt());
@@ -66,6 +70,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Kopen(AccountWinkelmandGenreViewmodel viewmodel)
         {
             viewmodel.Account = _accountRepository.GetAccountById(viewmodel.Account.Id);

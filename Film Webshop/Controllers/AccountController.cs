@@ -109,6 +109,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Films()
         {
             TicketAuthenticator auth = new TicketAuthenticator();
@@ -124,6 +125,7 @@ namespace Film_Webshop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Films(string gekozenGenre)
         {
             if (gekozenGenre == "Alles")
