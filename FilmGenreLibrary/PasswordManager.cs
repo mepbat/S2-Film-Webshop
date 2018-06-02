@@ -3,9 +3,9 @@ using System.Text;
 
 namespace FilmWebshopUtilities
 {
-    public static class PasswordManager
+    public class PasswordManager
     {
-        public static string Hash(string password)
+        public string Hash(string password)
         {
             byte[] bytes = Encoding.Unicode.GetBytes(password);
             SHA256Managed hashstring = new SHA256Managed();

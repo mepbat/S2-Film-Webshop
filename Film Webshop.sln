@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Film Webshop", "Film Webshop\Film Webshop.csproj", "{D8B6A3E5-B21A-45E2-833E-6E26A0C832E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmGenreLibrary", "FilmGenreLibrary\FilmGenreLibrary.csproj", "{D0994A72-57E1-4717-8F9D-DD217EF1F27D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmWebshopUtilities", "FilmGenreLibrary\FilmWebshopUtilities.csproj", "{D0994A72-57E1-4717-8F9D-DD217EF1F27D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

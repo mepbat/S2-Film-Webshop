@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace FilmWebshopUtilities
 {
-    public static class Validator
+    public class Validator
     {
         public static bool ValidEmail(string email)
         {

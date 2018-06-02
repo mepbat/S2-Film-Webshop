@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FilmWebshopUtilities;
 using Film_Webshop.Context;
 using Film_Webshop.Context.MSSQL;
 using Film_Webshop.Models;
@@ -17,24 +18,15 @@ namespace Film_Webshop.Repository
             _accountContext = context;
         }
 
+        
         public bool ValidEmail(string email)
         {
-            string mailregex = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-            if (Regex.IsMatch(email, mailregex))
-            {
-                return true;
-            }
-            return false;
+            return Validator.ValidEmail(email);
         }
 
         public bool ValidPassword(string password)
         {
-            string passregex = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}$";
-            if (Regex.IsMatch(password, passregex))
-            {
-                return true;
-            }
-            return false;
+            return Validator.ValidPassword(password);
         }
 
         public void AddAccount(Account account)
