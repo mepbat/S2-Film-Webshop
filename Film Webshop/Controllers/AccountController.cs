@@ -132,13 +132,7 @@ namespace Film_Webshop.Controllers
         public ActionResult Geschiedenis()
         {
             int accountId = _auth.Decrypt();
-            List<Film> films = _accountRepository.GetGekochteFilms(accountId);
-            for (var i = 0; i < films.Count; i++)
-            {
-                DateTime date = films[i].Date;
-                films[i] = _filmRepository.GetById(films[i].Id);
-                films[i].Date = date;
-            }
+            List<Film> films = _filmRepository.GetBoughtFilms(accountId);
             return View(films);
         }
     }

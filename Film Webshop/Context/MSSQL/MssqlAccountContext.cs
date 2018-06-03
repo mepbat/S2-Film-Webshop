@@ -62,38 +62,5 @@ namespace Film_Webshop.Context.MSSQL
                 return new List<Account>();
             }
         }
-
-        public List<Film> GetGeschiedenis(int accountId)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    List<Film> gekochteFilms = new List<Film>();
-                    string query = "SELECT * FROM AccountFilm WHERE Account_ID = @accountID";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@accountID", accountId);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Film film = new Film();
-                        film.Id = reader.GetInt32(reader.GetOrdinal("Film_ID"));
-                        gekochteFilms.Add(film);
-                        if (!reader.IsDBNull(reader.GetOrdinal("Datetime")))
-                        {
-                            film.Date = reader.GetDateTime(reader.GetOrdinal("Datetime"));
-                        }
-                    }
-                    return gekochteFilms;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return new List<Film>();
-            }
-
-        }
     }
 }

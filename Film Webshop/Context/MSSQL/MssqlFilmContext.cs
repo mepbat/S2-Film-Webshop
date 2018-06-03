@@ -213,6 +213,7 @@ namespace Film_Webshop.Context.MSSQL
                         int prijs = reader.GetInt32(reader.GetOrdinal("prijs"));
                         double rating = (double) reader.GetDecimal(reader.GetOrdinal("rating"));
                         byte[] image;
+                        DateTime date = reader.GetDateTime(reader.GetOrdinal("Datetime"));
                         Stream s = reader.GetStream(reader.GetOrdinal("Image"));
                         using (BinaryReader br = new BinaryReader(s))
                         {
@@ -221,6 +222,7 @@ namespace Film_Webshop.Context.MSSQL
                         int jaar = reader.GetInt32(reader.GetOrdinal("jaar"));
                         List<Genre> filmgenres = genreRepository.GetFilmGenres(id);
                         Film f = new Film(id, naam, beschrijving, filmgenres, lengte, prijs, rating, image, jaar);
+                        f.Date = date;
                         filmList.Add(f);
                     }
 
