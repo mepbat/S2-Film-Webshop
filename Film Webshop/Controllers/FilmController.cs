@@ -179,7 +179,7 @@ namespace Film_Webshop.Controllers
                 return View();
             }
             _filmRepository.EditFilm(viewmodel.Film);
-            _genreRepository.DeleteFilmGenres(viewmodel.Film);
+            _genreRepository.DeleteFilmGenres(viewmodel.Film.Id);
             _genreRepository.InsertFilmGenres(viewmodel.Film);
             return View("Toegevoegd");
         }

@@ -145,7 +145,7 @@ namespace Film_Webshop.Context.MSSQL
             }
         }
 
-        public void Delete(Film film)
+        public void Delete(int filmId)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace Film_Webshop.Context.MSSQL
                     conn.Open();
                     string query = "DELETE FROM dbo.FilmGenre WHERE Film_ID = @filmID";
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@filmID", film.Id);
+                    cmd.Parameters.AddWithValue("@filmID", filmId);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }

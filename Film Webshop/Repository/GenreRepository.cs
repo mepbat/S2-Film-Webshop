@@ -39,9 +39,9 @@ namespace Film_Webshop.Repository
             return _genreContext.SelectByGenreId(genreId);
         }
 
-        public void DeleteFilmGenres(Film film)
+        public void DeleteFilmGenres(int filmId)
         {
-            _genreContext.Delete(film);
+            _genreContext.Delete(filmId);
         }
     }
 }

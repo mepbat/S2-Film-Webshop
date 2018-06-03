@@ -10,6 +10,6 @@ namespace Film_Webshop.Context
         List<int> SelectByGenreId(int id);
         List<Genre> SelectAll();
         void Insert(int filmId, int genreId);
-        void Delete(Film film);
+        void Delete(int filmId);
     }
 }

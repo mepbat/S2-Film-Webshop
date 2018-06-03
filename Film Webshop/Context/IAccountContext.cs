@@ -7,6 +7,5 @@ namespace Film_Webshop.Context
     {
         void Insert(Account account);
         List<Account> SelectAll();
-        List<Film> GetGeschiedenis(int accountId);
     }
 }
