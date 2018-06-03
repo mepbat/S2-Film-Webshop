@@ -10,12 +10,19 @@
 else
 {
     <h2>Uw geschiedenis van gekochte films</h2>
-    <table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Prijs</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
         @for (int i = 0; i < Model.Count; ++i)
         {
             <tr>
                 <td>@Html.DisplayFor(m => m[i].Naam)</td>
-                <td>@Html.DisplayFor(m => m[i].Prijs)</td>
+                <td>@Html.DisplayFor(m => m[i].Prijs) Credits</td>
                 <td>@Html.DisplayFor(m => m[i].Date)</td>
             </tr>
         }
