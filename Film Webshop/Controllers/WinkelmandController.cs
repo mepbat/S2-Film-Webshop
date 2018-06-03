@@ -75,10 +75,8 @@ namespace Film_Webshop.Controllers
         {
             viewmodel.Account = _accountRepository.GetAccountById(viewmodel.Account.Id);
             viewmodel.Winkelmand.Id = _winkelmandRepository.GetWinkelmandId(viewmodel.Account.Id);
-            List<Film> films = _winkelmandRepository.GetFilmsInWinkelmand(viewmodel.Winkelmand.Id);
-            int totaalprijs = _winkelmandRepository.GetPrijs(films);
-            viewmodel.Winkelmand.Films = films;
-            viewmodel.Winkelmand.Totaalprijs = totaalprijs;
+            viewmodel.Winkelmand.Films = _winkelmandRepository.GetFilmsInWinkelmand(viewmodel.Winkelmand.Id);
+            viewmodel.Winkelmand.Totaalprijs = _winkelmandRepository.GetPrijs(viewmodel.Winkelmand.Films);
             if (viewmodel.Account.Credits >= viewmodel.Winkelmand.Totaalprijs)
             {
                 foreach (Film f in viewmodel.Winkelmand.Films)

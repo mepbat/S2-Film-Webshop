@@ -99,5 +99,11 @@ namespace Film_Webshop.Repository
                 return false;
             }
         }
+
+        public List<Film> GetGekochteFilms(int accountId)
+        {
+            List<Film> films = _accountContext.GetGeschiedenis(accountId);
+            return films;
+        }
     }
 }

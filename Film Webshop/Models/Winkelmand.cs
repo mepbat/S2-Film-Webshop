@@ -10,6 +10,7 @@ namespace Film_Webshop.Models
         public int Id { get; set; }
         public List<Film> Films { get; set; }
         public int Totaalprijs { get; set; }
+        public DateTime Moment { get; set; }
 
         public Winkelmand()
         {

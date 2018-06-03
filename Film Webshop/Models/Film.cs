@@ -17,6 +17,8 @@ namespace Film_Webshop.Models
         public byte[] Image { get; set; }
         public string GenresString { get; set; }
         public TimeSpan Time { get; set; }
+        public DateTime Date { get; set; }
+
 
         public Film()
         {

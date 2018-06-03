@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Film_Webshop.Context.MSSQL;
@@ -15,6 +17,7 @@ namespace Film_Webshop.Controllers
         private readonly AccountRepository _accountRepository = new AccountRepository(new MssqlAccountContext());
         private readonly FilmRepository _filmRepository = new FilmRepository(new MssqlFilmContext());
         private readonly GenreRepository _genreRepository = new GenreRepository(new MssqlGenreContext());
+        private readonly TicketAuthenticator _auth = new TicketAuthenticator();
 
         [HttpGet]
         public ActionResult Login()
@@ -113,8 +116,7 @@ namespace Film_Webshop.Controllers
             {
                 return RedirectToAction("Films");
             }
-            TicketAuthenticator auth = new TicketAuthenticator();
-            int accId = auth.Decrypt();
+            int accId = _auth.Decrypt();
             Account acc = _accountRepository.GetAccountById(accId);
             acc.Films = _filmRepository.GetBoughtFilms(accId).Where(x => x.ListGenres.Exists(y => y.Naam == gekozenGenre)).ToList();
             AccountFilmsViewmodel viewmodel = new AccountFilmsViewmodel
@@ -123,6 +125,21 @@ namespace Film_Webshop.Controllers
                 Account = acc
             };
             return View(viewmodel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Geschiedenis()
+        {
+            int accountId = _auth.Decrypt();
+            List<Film> films = _accountRepository.GetGekochteFilms(accountId);
+            for (var i = 0; i < films.Count; i++)
+            {
+                DateTime date = films[i].Date;
+                films[i] = _filmRepository.GetById(films[i].Id);
+                films[i].Date = date;
+            }
+            return View(films);
         }
     }
 }

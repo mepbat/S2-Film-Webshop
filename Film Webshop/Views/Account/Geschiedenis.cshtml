@@ -1,0 +1,24 @@
+﻿@using Film_Webshop.Models
+@model List<Film>
+@{
+    ViewBag.Title = "Geschiedenis";
+}
+@if (Model == null)
+{
+    <h2>U heeft nog geen films gekocht.</h2>
+}
+else
+{
+    <h2>Uw geschiedenis van gekochte films</h2>
+    <table>
+        @for (int i = 0; i < Model.Count; ++i)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => m[i].Naam)</td>
+                <td>@Html.DisplayFor(m => m[i].Prijs)</td>
+                <td>@Html.DisplayFor(m => m[i].Date)</td>
+            </tr>
+        }
+
+    </table>
+}
