@@ -81,7 +81,7 @@ namespace Film_Webshop.Context.MSSQL
             }
         }
 
-        public void Delete(int winkelmandId, int filmId)
+        public bool Delete(int winkelmandId, int filmId)
         {
             try
             {
@@ -95,14 +95,16 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
-        public void Insert(int winkelmandId, int filmId)
+        public bool Insert(int winkelmandId, int filmId)
         {
             try
             {
@@ -116,10 +118,12 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
     }

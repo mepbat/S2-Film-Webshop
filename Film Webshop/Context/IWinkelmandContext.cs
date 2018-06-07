@@ -7,7 +7,7 @@ namespace Film_Webshop.Context
     {
         List<Film> GetFilmsInWinkelmand(int winkelmandId);
         int GetWinkelmandId(int accId);
-        void Insert(int accountId, int filmId);
-        void Delete(int winkelmandId, int filmId);
+        bool Insert(int accountId, int filmId);
+        bool Delete(int winkelmandId, int filmId);
     }
 }

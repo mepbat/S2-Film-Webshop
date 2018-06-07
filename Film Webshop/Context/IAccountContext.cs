@@ -5,7 +5,7 @@ namespace Film_Webshop.Context
 {
     public interface IAccountContext
     {
-        void Insert(Account account);
+        bool Insert(Account account);
         List<Account> SelectAll();
     }
 }

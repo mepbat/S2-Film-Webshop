@@ -8,6 +8,6 @@ namespace Film_Webshop.Context
 {
     public interface ICreditContext
     {
-        void Update(Account acc, int credits);
+        bool Update(Account acc, int credits);
     }
 }

@@ -29,9 +29,9 @@ namespace Film_Webshop.Repository
             return Validator.ValidPassword(password);
         }
 
-        public void AddAccount(Account account)
+        public bool AddAccount(Account account)
         {
-            _accountContext.Insert(account);
+            return _accountContext.Insert(account);
         }
 
         public Account LoginAccount(Account account)

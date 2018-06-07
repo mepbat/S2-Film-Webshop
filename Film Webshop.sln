@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Film Webshop", "Film Webshop\Film Webshop.csproj", "{D8B6A3E5-B21A-45E2-833E-6E26A0C832E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmWebshopUtilities", "FilmGenreLibrary\FilmWebshopUtilities.csproj", "{D0994A72-57E1-4717-8F9D-DD217EF1F27D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmWebshopUtilities", "FilmGenreLibrary\FilmWebshopUtilities.csproj", "{D0994A72-57E1-4717-8F9D-DD217EF1F27D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Film Webshop Test", "Film Webshop Test\Film Webshop Test.csproj", "{46435B84-919D-4A95-8B90-536DE50B508F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D0994A72-57E1-4717-8F9D-DD217EF1F27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0994A72-57E1-4717-8F9D-DD217EF1F27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0994A72-57E1-4717-8F9D-DD217EF1F27D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46435B84-919D-4A95-8B90-536DE50B508F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46435B84-919D-4A95-8B90-536DE50B508F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46435B84-919D-4A95-8B90-536DE50B508F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46435B84-919D-4A95-8B90-536DE50B508F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

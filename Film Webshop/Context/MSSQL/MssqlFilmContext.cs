@@ -10,7 +10,7 @@ namespace Film_Webshop.Context.MSSQL
 {
     public class MssqlFilmContext : Database.Database, IFilmContext
     {
-        public void Insert(Film film)
+        public bool Insert(Film film)
         {
             try
             {
@@ -29,10 +29,12 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
@@ -119,7 +121,7 @@ namespace Film_Webshop.Context.MSSQL
             }
         }
 
-        public void Delete(Film film)
+        public bool Delete(Film film)
         {
             try
             {
@@ -132,14 +134,16 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
-        public void Update(Film film)
+        public bool Update(Film film)
         {
             try
             {
@@ -159,14 +163,16 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
-        public void BuyFilm(int filmId, int accId, int credits, DateTime datetime)
+        public bool BuyFilm(int filmId, int accId, int credits, DateTime datetime)
         {
             try
             {
@@ -183,11 +189,13 @@ namespace Film_Webshop.Context.MSSQL
                         command.ExecuteNonQuery();
                         conn.Close();
                     }
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 

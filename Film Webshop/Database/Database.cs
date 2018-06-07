@@ -11,7 +11,8 @@ namespace Film_Webshop.Database
 
         static Database()
         {
-            ConnectionString = "Data Source=mssql.fhict.local;Initial Catalog = dbi383656; Persist Security Info=True;User ID = dbi383656; Password=wachtwoord123";
+            ConnectionString = "Data Source=mssql.fhict.local;Initial Catalog = dbi383656; Persist Security Info=True;User ID = dbi383656; Password=Wachtwoord123";
+            //ConnectionString = "Server=mssql.fhict.local;Database=dbi383656;User Id=dbi383656;Password=Wachtwoord123";
         }
     }
 }

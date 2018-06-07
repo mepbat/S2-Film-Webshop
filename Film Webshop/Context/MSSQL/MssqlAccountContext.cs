@@ -7,7 +7,7 @@ namespace Film_Webshop.Context.MSSQL
 {
     public class MssqlAccountContext : Database.Database, IAccountContext
     {
-        public void Insert(Account account)
+        public bool Insert(Account account)
         {
             try
             {
@@ -23,10 +23,12 @@ namespace Film_Webshop.Context.MSSQL
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
