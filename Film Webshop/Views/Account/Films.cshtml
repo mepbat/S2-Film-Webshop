@@ -9,7 +9,7 @@
     List<SelectListItem> filmList = new List<SelectListItem>();
     filmList.Add(new SelectListItem
     {
-        Text = "Alles (" + Model.Account.Films.Count + ")",
+        Text = "Alles (" + Model.AllFilmsCount + ")",
         Value = "Alles"
     });
     foreach (var item in Model.Genres)

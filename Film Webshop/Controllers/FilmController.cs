@@ -35,7 +35,8 @@ namespace Film_Webshop.Controllers
             {
                 ListFilm = _filmRepository.GetAllFilms(),
                 ListGenres = _genreRepository.GetAllGenres(),
-                Account = acc
+                Account = acc,
+                AllFilmsCount = _filmRepository.GetAllFilms().Count
             };
             return View(viewmodel);
         }
@@ -50,6 +51,7 @@ namespace Film_Webshop.Controllers
             }
             TicketAuthenticator auth = new TicketAuthenticator();
             Account acc = _accountRepository.GetAccountById(auth.Decrypt());
+            acc.Films = _filmRepository.GetBoughtFilms(acc.Id);
             acc.Winkelmand = new Winkelmand
             {
                 Films = _winkelmandRepository.GetFilmsInWinkelmand(_winkelmandRepository.GetWinkelmandId(acc.Id))
@@ -58,7 +60,8 @@ namespace Film_Webshop.Controllers
             {
                 ListGenres = _genreRepository.GetAllGenres(),
                 ListFilm = new List<Film>(),
-                Account = acc
+                Account = acc,
+                AllFilmsCount = _filmRepository.GetAllFilms().Count
             };
             List<int> filmIds = _genreRepository.GetFilmsWithGenre(gekozenGenre);
             foreach (int id in filmIds)

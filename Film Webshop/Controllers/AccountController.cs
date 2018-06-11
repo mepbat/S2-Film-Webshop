@@ -103,7 +103,8 @@ namespace Film_Webshop.Controllers
             AccountFilmsViewmodel viewmodel = new AccountFilmsViewmodel
             {
                 Genres = _genreRepository.GetAllGenres(),
-                Account = acc
+                Account = acc,
+                AllFilmsCount = _filmRepository.GetBoughtFilms(accId).Count
             };
             return View(viewmodel);
         }
@@ -122,7 +123,8 @@ namespace Film_Webshop.Controllers
             AccountFilmsViewmodel viewmodel = new AccountFilmsViewmodel
             {
                 Genres = _genreRepository.GetAllGenres(),
-                Account = acc
+                Account = acc,
+                AllFilmsCount = _filmRepository.GetBoughtFilms(accId).Count
             };
             return View(viewmodel);
         }

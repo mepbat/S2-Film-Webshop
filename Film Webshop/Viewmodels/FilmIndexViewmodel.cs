@@ -12,5 +12,6 @@ namespace Film_Webshop.Viewmodels
         public List<Genre> ListGenres { get; set; }
         public string GekozenGenre { get; set; }
         public Account Account { get; set; }
+        public int AllFilmsCount { get; set; }
     }
 }

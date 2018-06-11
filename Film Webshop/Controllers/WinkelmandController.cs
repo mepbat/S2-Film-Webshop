@@ -22,12 +22,14 @@ namespace Film_Webshop.Controllers
         public ActionResult Index()
         {
             int accId = _auth.Decrypt();
-            List<Film> listFilms = _winkelmandRepository.GetFilmsInWinkelmand(_winkelmandRepository.GetWinkelmandId(accId));
+            int winkelmandId = _winkelmandRepository.GetWinkelmandId(accId);
+            List<Film> listFilms = _winkelmandRepository.GetFilmsInWinkelmand(winkelmandId);
             AccountWinkelmandGenreViewmodel viewmodel = new AccountWinkelmandGenreViewmodel
             {
                 Winkelmand = new Winkelmand(listFilms, _winkelmandRepository.GetPrijs(listFilms)),
                 Genres = _genreRepository.GetAllGenres(),
-                Account = _accountRepository.GetAccountById(accId)
+                Account = _accountRepository.GetAccountById(accId),
+                AllFilmsCount = _winkelmandRepository.GetFilmsInWinkelmand(winkelmandId).Count
             };
             return View(viewmodel);
         }
@@ -41,12 +43,14 @@ namespace Film_Webshop.Controllers
                 return RedirectToAction("Index");
             }
             int accId = _auth.Decrypt();
-            List<Film> listFilms = _winkelmandRepository.GetFilmsInWinkelmand(_winkelmandRepository.GetWinkelmandId(accId));
+            int winkelmandId = _winkelmandRepository.GetWinkelmandId(accId);
+            List<Film> listFilms = _winkelmandRepository.GetFilmsInWinkelmand(winkelmandId);
             AccountWinkelmandGenreViewmodel viewmodel = new AccountWinkelmandGenreViewmodel
             {
                 Winkelmand = new Winkelmand(listFilms.Where(x => x.ListGenres.Exists(y => y.Naam == gekozenGenre)).ToList(), _winkelmandRepository.GetPrijs(listFilms)),
                 Genres = _genreRepository.GetAllGenres(),
-                Account = _accountRepository.GetAccountById(accId)
+                Account = _accountRepository.GetAccountById(accId),
+                AllFilmsCount = _winkelmandRepository.GetFilmsInWinkelmand(winkelmandId).Count
             };
             return View(viewmodel);
         }

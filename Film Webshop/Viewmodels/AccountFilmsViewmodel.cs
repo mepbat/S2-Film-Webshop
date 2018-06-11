@@ -10,5 +10,6 @@ namespace Film_Webshop.Viewmodels
     {
         public Account Account { get; set; }
         public List<Genre> Genres { get; set; }
+        public int AllFilmsCount { get; set; }
     }
 }
