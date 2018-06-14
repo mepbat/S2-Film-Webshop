@@ -2,7 +2,7 @@
 @model Film_Webshop.Viewmodels.ToevoegenViewmodel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Wijzigen";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,7 +13,7 @@
     @ViewBag.image
     @ViewBag.gegevens
     <div class="form-group">
-        @Html.LabelFor(m => m.Film.Image, new { @class = "col-md-2 control-label" })
+        @Html.Label("Afbeelding", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <input type="file" name="postedFile" />
         </div>

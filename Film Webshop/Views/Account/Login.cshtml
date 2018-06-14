@@ -1,7 +1,7 @@
 ﻿@using Film_Webshop.Models
 @model Account
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Inloggen";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,20 +11,20 @@
             @using (Html.BeginForm("Login", "Account", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
+                <h4>Log in met een geregistreerd account.</h4>
                 <h5>@ViewBag.Message</h5>
                 <h5>@ViewBag.Message1</h5>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email , new { @class = "col-md-2 control-label" })
+                    @Html.Label("Email", new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Wachtwoord, new { @class = "col-md-2 control-label" })
+                    @Html.Label("Wachtwoord", new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.Wachtwoord, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Wachtwoord, "", new { @class = "text-danger" })

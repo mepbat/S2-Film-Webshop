@@ -32,7 +32,7 @@
 {
     if (Model.Account.Admin)
     {
-        <button type="submit">Film Toevoegen</button>
+        <button type="submit" class="btn btn-default">Film Toevoegen</button>
     }
 }
 @using (Html.BeginForm())
@@ -41,7 +41,7 @@
     <div class="form-group dropdown">
         <br />
         @Html.DropDownList("gekozenGenre", filmList)
-        <input type="submit" value="Filter" />
+        <input type="submit" class="btn btn-default" value="Filter" />
     </div>
     <table class="table" style="width: 33%; float:left">
         <tbody id="myTable">
@@ -81,7 +81,7 @@
                     @if (Model.Account.Admin)
                     {
                         <td style="width: 10%">
-                            <a href="@Url.Action("Edit", new { id = Model.ListFilm[i].Id })">Edit</a>
+                            <a href="@Url.Action("Edit", new { id = Model.ListFilm[i].Id })">Wijzigen</a>
                         </td>
                     }
                 </tr>
@@ -126,7 +126,7 @@
                     @if (Model.Account.Admin)
                     {
                         <td style="width: 10%">
-                            <a href="@Url.Action("Edit", new { id = Model.ListFilm[i].Id })">Edit</a>
+                            <a href="@Url.Action("Edit", new { id = Model.ListFilm[i].Id })">Wijzigen</a>
                         </td>
                     }
                 </tr>
@@ -171,7 +171,7 @@
                     @if (Model.Account.Admin)
                     {
                         <td style="width: 10%">
-                            <a href="@Url.Action("Edit", new {id = Model.ListFilm[i].Id})">Edit</a>
+                            <a href="@Url.Action("Edit", new {id = Model.ListFilm[i].Id})">Wijzigen</a>
                         </td>
                     }
                 </tr>
