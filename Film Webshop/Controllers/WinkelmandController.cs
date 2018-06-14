@@ -16,6 +16,7 @@ namespace Film_Webshop.Controllers
         private readonly FilmRepository _filmRepository = new FilmRepository(new MssqlFilmContext());
         private readonly AccountRepository _accountRepository = new AccountRepository(new MssqlAccountContext());
         readonly TicketAuthenticator _auth = new TicketAuthenticator();
+        private bool _teWeinig = false;
 
         [HttpGet]
         [Authorize]
@@ -31,6 +32,10 @@ namespace Film_Webshop.Controllers
                 Account = _accountRepository.GetAccountById(accId),
                 AllFilmsCount = _winkelmandRepository.GetFilmsInWinkelmand(winkelmandId).Count
             };
+            if (_teWeinig)
+            {
+                ViewBag.teWeinig = "Te weinig credits";
+            }
             return View(viewmodel);
         }
 
@@ -87,8 +92,10 @@ namespace Film_Webshop.Controllers
                 {
                     _filmRepository.BuyFilm(viewmodel.Account, f);
                 }
+                _teWeinig = false;
                 return RedirectToAction("Films", "Account");
             }
+            _teWeinig = true;
             return RedirectToAction("Index", "Winkelmand");
         }
     }
